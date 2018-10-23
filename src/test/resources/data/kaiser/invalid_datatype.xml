@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<account xmlns="http://kaiser.gateway.apria.org/kaiser_incominmg.xsd">
+	<company>
+		<name>Acme Insurance</name>
+		<geo>Canada</geo>
+		<active>yyyy</active>
+	</company>
+	<contact>
+		<firstname>John</firstname>
+		<lastName>Doe</lastName>
+	</contact>
+</account>

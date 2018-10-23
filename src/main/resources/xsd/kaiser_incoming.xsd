@@ -1,0 +1,27 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://kaiser.gateway.apria.org/kaiser_incominmg.xsd"
+	targetNamespace="http://kaiser.gateway.apria.org/kaiser_incominmg.xsd"
+	elementFormDefault="qualified">
+
+	<xsd:complexType name="company">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="geo" type="xsd:string"/>
+			<xsd:element name="active" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="contact">
+		<xsd:sequence>
+			<xsd:element name="firstname" type="xsd:string"/>
+			<xsd:element name="lastName" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="account">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="company" type="tns:company" />
+				<xsd:element name="contact" type="tns:contact" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

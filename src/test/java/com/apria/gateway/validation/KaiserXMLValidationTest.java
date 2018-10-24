@@ -16,10 +16,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.xml.sax.SAXParseException;
 
 import com.apria.gateway.validation.app.GatewayVendorEnum;
+import com.apria.gateway.validation.app.KaiserXMLValidatorImpl;
 import com.apria.gateway.validation.app.XMLValidator;
+import com.apria.gateway.validation.config.XMLValidationConfiguration;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(
+		classes = {
+				XMLValidationConfiguration.class,
+				KaiserXMLValidatorImpl.class
+		}
+)
+
 public class KaiserXMLValidationTest {
 
 	@Resource(name="xmlValidators")

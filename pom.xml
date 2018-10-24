@@ -24,6 +24,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<camel.version>2.19.1</camel.version>
+		<qpid.jms.version>0.30.0</qpid.jms.version>
 	</properties>
 
 	<dependencies>
@@ -37,6 +38,7 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Activemq -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-activemq</artifactId>
@@ -47,6 +49,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- Camel -->
 	    <dependency>
 	      <groupId>org.apache.camel</groupId>
 	      <artifactId>camel-spring-boot-starter</artifactId>
@@ -63,6 +67,20 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+	    <!--  SMTP Mail -->
+		<dependency>
+	       <groupId>org.apache.camel</groupId>
+	       <artifactId>camel-mail</artifactId>
+	       <version>${camel.version}</version>
+	    </dependency>
+	    
+		<!--  QPID Client -->
+		<dependency>
+	       <groupId>org.apache.qpid</groupId>
+	       <artifactId>qpid-jms-client</artifactId>
+	       <version>${qpid.jms.version}</version>
+	    </dependency>
+
 	</dependencies>
 
 	<build>

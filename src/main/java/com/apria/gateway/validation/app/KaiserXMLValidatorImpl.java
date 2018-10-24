@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
 @Component(value="kaiserXMLValidator")
-public class KaiserXMLValidator implements XMLValidator {
+public class KaiserXMLValidatorImpl implements XMLValidator {
 
 	@Autowired
 	Schema schema;

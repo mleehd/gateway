@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.xml.sax.SAXException;
 
 import com.apria.gateway.validation.app.GatewayVendorEnum;
-import com.apria.gateway.validation.app.KaiserXMLValidator;
+import com.apria.gateway.validation.app.KaiserXMLValidatorImpl;
 import com.apria.gateway.validation.app.XMLValidator;
 
 @Configuration
@@ -26,7 +26,7 @@ public class XMLValidationConfiguration {
 	private String schemaPath;
 
 	@Autowired
-	KaiserXMLValidator xmlValidator;
+	KaiserXMLValidatorImpl xmlValidator;
 	
 	@Bean
 	public Schema schemaBean() throws SAXException {

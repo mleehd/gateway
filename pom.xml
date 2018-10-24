@@ -67,6 +67,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+	    <dependency>
+	      <groupId>org.apache.camel</groupId>
+	      <artifactId>camel-velocity</artifactId>
+	      <version>${camel.version}</version>
+	    </dependency>
 	    <!--  SMTP Mail -->
 		<dependency>
 	       <groupId>org.apache.camel</groupId>
@@ -81,16 +86,53 @@
 	       <version>${qpid.jms.version}</version>
 	    </dependency>
 
+		<dependency>
+		    <groupId>org.codehaus.mojo</groupId>
+		    <artifactId>jaxb2-maven-plugin</artifactId>
+		    <version>2.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
+	    <pluginManagement>
+	        <plugins>
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-compiler-plugin</artifactId>
+	                <configuration>
+	                    <source>1.8</source>
+	                    <target>1.8</target>
+	                </configuration>
+	            </plugin>
+	        </plugins>
+	    </pluginManagement>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+				    <execution>
+				        <id>xjc</id>
+				        <goals>
+				            <goal>xjc</goal>
+				        </goals>
+				    </execution>
+				</executions>
+				<configuration>
+				    <!-- The package of your generated sources -->
+				    <packageName>com.apria.gateway.jaxb</packageName>
+					<sources>
+				         <source>src/main/resources/xsd/kaiser_incoming.xsd</source>
+				     </sources>
+				     <outputDirectory>src/main/java</outputDirectory>
+				     <clearOutputDir>false</clearOutputDir>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

@@ -1,27 +1,384 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:tns="http://kaiser.gateway.apria.org/kaiser_incominmg.xsd"
-	targetNamespace="http://kaiser.gateway.apria.org/kaiser_incominmg.xsd"
-	elementFormDefault="qualified">
-
-	<xsd:complexType name="company">
-		<xsd:sequence>
-			<xsd:element name="name" type="xsd:string"/>
-			<xsd:element name="geo" type="xsd:string"/>
-			<xsd:element name="active" type="xsd:boolean"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	<xsd:complexType name="contact">
-		<xsd:sequence>
-			<xsd:element name="firstname" type="xsd:string"/>
-			<xsd:element name="lastName" type="xsd:string"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	<xsd:element name="account">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element name="company" type="tns:company" />
-				<xsd:element name="contact" type="tns:contact" />
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-</xsd:schema>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
+	<!-- KP_Orders only include the KP Order from KPtoVender Data Items Excel tab -->
+	<xs:complexType name="KP_Order">
+		<xs:sequence>
+			<xs:element ref="Order_Header"/>
+			<xs:element ref="Order_Equipment" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Delivery_Addresses" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Order_Notes" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="KP_Order" type="KP_Order"/>
+	<!-- End of KP_Order section -->
+	<!-- KP Order Header -->
+	<xs:complexType name="Order_Header">
+		<xs:sequence>
+			<xs:element ref="Order" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Order_Header" type="Order_Header"/>
+	<xs:complexType name="Order">
+		<xs:sequence>
+			<xs:element ref="Vendor_ID"/>
+			<xs:element ref="KP_Order_ID"/>
+			<xs:element ref="Vendor_Order_ID"/>
+			<xs:element ref="Notification_Sent_Date"/>
+			<xs:element ref="Notification_Sent_Time"/>
+			<xs:element ref="Order_Location"/>
+			<xs:element ref="Transaction_Type"/>
+			<xs:element ref="Patient" minOccurs="0"/>
+			<xs:element name="Referring_Physician" type="Physician" minOccurs="0"/>
+			<xs:element name="Diagnosis" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="ICD_CD" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="ICD_IND" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="POS_Type_Code" type="Place_Of_Service" minOccurs="0"/>
+			<xs:element name="Generic_1" minOccurs="0"/>
+			<xs:element name="Generic_2" minOccurs="0"/>
+			<xs:element name="Generic_3" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Order" type="Order"/>
+	<!-- KP Order Header -->
+	<xs:complexType name="Vendor_ID" mixed="true"/>
+	<xs:element name="Vendor_ID" type="Vendor_ID"/>
+	<xs:complexType name="KP_Order_ID" mixed="true"/>
+	<xs:element name="KP_Order_ID" type="KP_Order_ID"/>
+	<xs:complexType name="Vendor_Order_ID" mixed="true"/>
+	<xs:element name="Vendor_Order_ID" type="Vendor_Order_ID"/>
+	<xs:complexType name="Order_Location" mixed="true"/>
+	<xs:element name="Order_Location" type="Order_Location"/>
+	<xs:complexType name="Transaction_Type" mixed="true"/>
+	<xs:element name="Transaction_Type" type="Transaction_Type"/>
+	<xs:complexType name="Order_ID" mixed="true"/>
+	<xs:element name="Order_ID" type="Order_ID"/>
+	<xs:complexType name="Order_Type" mixed="true"/>
+	<xs:element name="Order_Type" type="Order_Type"/>
+	<!--    <xs:complexType name="Primary_Payor_Group" mixed="true"/>
+	<xs:element name="Primary_Payor_Group" type="Primary_Payor_Group"/>   -->
+	<xs:complexType name="Payor_Group" mixed="true"/>
+	<xs:element name="Payor_Group" type="Payor_Group"/>
+	<xs:complexType name="MBI" mixed="true"/>
+	<xs:element name="MBI" type="MBI"/>
+	<xs:complexType name="ICD_CD" mixed="true"/>
+	<xs:element name="ICD_CD" type="ICD_CD"/>
+	<xs:complexType name="ICD_IND" mixed="true"/>
+	<xs:element name="ICD_IND" type="ICD_IND"/>
+	<xs:complexType name="Place_Of_Service" mixed="true"/>
+	<xs:element name="Place_Of_Service" type="Place_Of_Service"/>
+	<xs:complexType name="Notification_Sent_Date" mixed="true"/>
+	<xs:element name="Notification_Sent_Date" type="Notification_Sent_Date"/>
+	<xs:complexType name="Notification_Sent_Time" mixed="true"/>
+	<xs:element name="Notification_Sent_Time" type="Notification_Sent_Time"/>
+	<!-- KP Order Equipment                                 -->
+	<xs:complexType name="Order_Equipment">
+		<xs:sequence>
+			<xs:element ref="Order_Equipment_Line" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Order_Equipment" type="Order_Equipment"/>
+	<!-- End of KP Order Equipment section                                 -->
+	<!-- KP KP Delivery Addresses                                  -->
+	<xs:complexType name="Delivery_Addresses">
+		<xs:sequence>
+			<xs:element ref="Delivery_Address" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Delivery_Addresses" type="Delivery_Addresses"/>
+	<!-- End of KP KP Delivery Addresses                                  -->
+	<xs:complexType name="Order_Notes">
+		<xs:sequence>
+			<xs:element ref="Order_Note" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Order_Notes" type="Order_Notes"/>
+	<!--Begin of KP Transaction_Details -->
+	<xs:complexType name="Transaction_Details">
+		<xs:sequence>
+			<xs:element ref="Order_Equipment" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Delivery_Address" minOccurs="0"/>
+			<xs:element name="Generic_1" minOccurs="0"/>
+			<xs:element name="Generic_2" minOccurs="0"/>
+			<xs:element name="Generic_3" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Transaction_Details" type="Transaction_Details"/>
+	<!--end of KP Transaction_Details-->
+	<!--KP Order Equipment LIne Details-->
+	<xs:complexType name="Order_Equipment_Line">
+		<xs:sequence>
+			<!--This is the begining of KP Order's Order Equipment Line-->
+			<xs:element ref="Order_Line"/>
+			<xs:element name="Line_Item_Referral_ID" minOccurs="0"/>
+			<xs:element ref="Line_Address_Type" minOccurs="0"/>
+			<xs:element ref="Line_Coverage" minOccurs="0"/>
+			<xs:element ref="Line_Item_Code" minOccurs="0"/>
+			<xs:element ref="Line_Item_Description" minOccurs="0"/>
+			<xs:element name="Line_Item_Soft_Good_HC_ID" minOccurs="0"/>
+			<xs:element name="Line_Item_Modifier_Code" minOccurs="0"/>
+			<xs:element name="Request_Type" minOccurs="0"/>
+			<xs:element ref="Line_Item_Quantity" minOccurs="0"/>
+			<xs:element ref="Line_Service_Start_Date" minOccurs="0"/>
+			<xs:element name="Line_Service_Expiration_Date" minOccurs="0"/>
+			<xs:element ref="Line_Duration_Unit" minOccurs="0"/>
+			<xs:element ref="Line_Duration_Of_Use" minOccurs="0"/>
+			<xs:element ref="Line_Delivery_Type" minOccurs="0"/>
+			<xs:element ref="Line_Notes" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Pricing_Information" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Line_CoPay_Method"/>
+						<xs:element ref="Line_CoPay_Amount"/>
+						<xs:element ref="Line_Member_Liability"/>
+						<xs:element ref="Line_KP_Share"/>
+						<xs:element ref="Line_Medicare_Share"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!--This is the end of KP Order's Order Equipment Line-->
+			<!--This is the start of Transaction Detial's Order Equipment Line-->
+			<!--This is the end of Transaction Detial's Order Equipment Line-->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Order_Equipment_Line" type="Order_Equipment_Line"/>
+	<!--End of KP Order Equipment Line-->
+	<xs:complexType name="Order_Line" mixed="true"/>
+	<xs:element name="Order_Line" type="Order_Line"/>
+	<xs:complexType name="Line_Address_Type" mixed="true"/>
+	<xs:element name="Line_Address_Type" type="Line_Address_Type"/>
+	<xs:complexType name="Line_Coverage" mixed="true"/>
+	<xs:element name="Line_Coverage" type="Line_Coverage"/>
+	<xs:complexType name="Line_Item_Code" mixed="true"/>
+	<xs:element name="Line_Item_Code" type="Line_Item_Code"/>
+	<xs:complexType name="Line_Item_Description" mixed="true"/>
+	<xs:element name="Line_Item_Description" type="Line_Item_Description"/>
+	<xs:complexType name="Line_Item_Quantity" mixed="true"/>
+	<xs:element name="Line_Item_Quantity" type="Line_Item_Quantity"/>
+	<xs:complexType name="Line_Service_Start_Date" mixed="true"/>
+	<xs:element name="Line_Service_Start_Date" type="Line_Service_Start_Date"/>
+	<xs:complexType name="Line_Duration_Unit" mixed="true"/>
+	<xs:element name="Line_Duration_Unit" type="Line_Duration_Unit"/>
+	<xs:complexType name="Line_Duration_Of_Use" mixed="true"/>
+	<xs:element name="Line_Duration_Of_Use" type="Line_Duration_Of_Use"/>
+	<xs:complexType name="Line_Delivery_Type" mixed="true"/>
+	<xs:element name="Line_Delivery_Type" type="Line_Delivery_Type"/>
+	<xs:complexType name="Error_Codes" mixed="true"/>
+	<xs:element name="Error_Codes" type="Error_Codes"/>
+	<xs:complexType name="Line_Notes">
+		<xs:sequence>
+			<xs:element ref="Line_Note" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Line_Notes" type="Line_Notes"/>
+	<xs:complexType name="Line_Note">
+		<xs:sequence>
+			<xs:element ref="Line_Note_ID"/>
+			<xs:element ref="Line_Note_Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Line_Note" type="Line_Note"/>
+	<xs:complexType name="Line_Note_ID" mixed="true"/>
+	<xs:element name="Line_Note_ID" type="Line_Note_ID"/>
+	<xs:complexType name="Line_Note_Text" mixed="true"/>
+	<xs:element name="Line_Note_Text" type="Line_Note_Text"/>
+	<xs:complexType name="Line_CoPay_Method" mixed="true"/>
+	<xs:element name="Line_CoPay_Method" type="Line_CoPay_Method"/>
+	<xs:complexType name="Line_CoPay_Amount" mixed="true"/>
+	<xs:element name="Line_CoPay_Amount" type="Line_CoPay_Amount"/>
+	<xs:complexType name="Line_Member_Liability" mixed="true"/>
+	<xs:element name="Line_Member_Liability" type="Line_Member_Liability"/>
+	<xs:complexType name="Line_KP_Share" mixed="true"/>
+	<xs:element name="Line_KP_Share" type="Line_KP_Share"/>
+	<xs:complexType name="Line_Medicare_Share" mixed="true"/>
+	<xs:element name="Line_Medicare_Share" type="Line_Medicare_Share"/>
+	<xs:complexType name="Line_Retrieval_Date" mixed="true"/>
+	<xs:element name="Line_Retrieval_Date" type="Line_Retrieval_Date"/>
+	<xs:complexType name="Line_Retrieval_Reason" mixed="true"/>
+	<xs:element name="Line_Retrieval_Reason" type="Line_Retrieval_Reason"/>
+	<xs:complexType name="Line_Retrieval_Type" mixed="true"/>
+	<xs:element name="Line_Retrieval_Type" type="Line_Retrieval_Type"/>
+	<!--KP Delivery Addresss -->
+	<xs:complexType name="Delivery_Address">
+		<xs:sequence>
+			<xs:element ref="Address_Type" minOccurs="0"/>
+			<xs:element ref="Contact_Person" minOccurs="0"/>
+			<xs:element ref="Address" minOccurs="0"/>
+			<xs:element ref="Primary_Phone" minOccurs="0"/>
+			<xs:element ref="Secondary_Phone" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Delivery_Address" type="Delivery_Address"/>
+	<!--End of KP Delivery Addresss -->
+	<xs:complexType name="Address_Type" mixed="true"/>
+	<xs:element name="Address_Type" type="Address_Type"/>
+	<xs:complexType name="Primary_Phone" mixed="true"/>
+	<xs:element name="Primary_Phone" type="Primary_Phone"/>
+	<xs:complexType name="Secondary_Phone" mixed="true"/>
+	<xs:element name="Secondary_Phone" type="Secondary_Phone"/>
+	<xs:complexType name="Order_Note">
+		<xs:sequence>
+			<xs:element ref="Order_Note_ID" minOccurs="0"/>
+			<xs:element ref="Order_Note_Text" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Order_Note" type="Order_Note"/>
+	<xs:complexType name="Order_Note_ID" mixed="true"/>
+	<xs:element name="Order_Note_ID" type="Order_Note_ID"/>
+	<xs:complexType name="Order_Note_Text" mixed="true"/>
+	<xs:element name="Order_Note_Text" type="Order_Note_Text"/>
+	<!--KP Contact Person -->
+	<xs:complexType name="Contact_Person">
+		<xs:sequence>
+			<xs:element ref="Name"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Contact_Person" type="Contact_Person"/>
+	<!--End Contact Person -->
+	<xs:complexType name="Phone" mixed="true"/>
+	<xs:element name="Phone" type="Phone"/>
+	<!--KP Physician-->
+	<xs:complexType name="Physician">
+		<xs:sequence>
+			<xs:element ref="Name" minOccurs="0"/>
+			<xs:element ref="UPIN" minOccurs="0"/>
+			<xs:element ref="NPI_ID" minOccurs="0"/>
+			<xs:element name="Generic_1" minOccurs="0"/>
+			<xs:element name="Generic_2" minOccurs="0"/>
+			<xs:element name="Generic_3" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Physician" type="Physician"/>
+	<!--End of KP Physician-->
+	<xs:complexType name="UPIN" mixed="true"/>
+	<xs:element name="UPIN" type="UPIN"/>
+	<xs:complexType name="NPI_ID" mixed="true"/>
+	<xs:element name="NPI_ID" type="NPI_ID"/>
+	<!--KP Patient                                                     -->
+	<xs:complexType name="Patient">
+		<xs:sequence>
+			<xs:element ref="MRN"/>
+			<xs:element ref="Name"/>
+			<xs:element ref="Address" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Communication_Device" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Device_Line" minOccurs="0"/>
+						<xs:element name="Device_Number" minOccurs="0"/>
+						<xs:element name="Extension_Number" minOccurs="0"/>
+						<xs:element name="Device_Location" minOccurs="0"/>
+						<xs:element name="Device_Type" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="DOB"/>
+			<xs:element ref="Gender"/>
+			<xs:element ref="Coverages" minOccurs="0"/>
+			<!--		<xs:element ref="Primary_Payor_Group"/>       -->
+			<xs:element ref="Height" minOccurs="0"/>
+			<xs:element ref="Weight" minOccurs="0"/>
+			<xs:element name="SPO2" minOccurs="0"/>
+			<xs:element ref="Written_Lang_Pref" minOccurs="0"/>
+			<xs:element ref="Spoken_Lang_Pref" minOccurs="0"/>
+			<xs:element ref="Interpreter_Req" minOccurs="0"/>
+			<xs:element ref="KP_Client_ID_Number" minOccurs="0"/>
+			<xs:element ref="Language_Line_Number" minOccurs="0"/>
+			<xs:element ref="ASL_Number" minOccurs="0"/>
+			<xs:element name="Generic_1" minOccurs="0"/>
+			<xs:element name="Generic_2" minOccurs="0"/>
+			<xs:element name="Generic_3" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Patient" type="Patient"/>
+	<!--End of KP Patient section                                                     -->
+	<xs:complexType name="MRN" mixed="true"/>
+	<xs:element name="MRN" type="MRN"/>
+	<xs:complexType name="DOB" mixed="true"/>
+	<xs:element name="DOB" type="DOB"/>
+	<xs:complexType name="Gender" mixed="true"/>
+	<xs:element name="Gender" type="Gender"/>
+	<xs:complexType name="Coverage" mixed="true"/>
+	<xs:element name="Coverage" type="Coverage"/>
+	<!--KP Coverages                                                     -->
+	<xs:complexType name="Coverages">
+		<xs:sequence>
+			<xs:element name="Coverage_Line" minOccurs="0"/>
+			<xs:element name="Visiting_Member" minOccurs="0"/>
+			<xs:element name="Payor_Group" minOccurs="0"/>
+			<xs:element name="MBI" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Coverages" type="Coverages"/>
+	<!--End of KP Coverages                                                     -->
+	<xs:complexType name="HIC" mixed="true"/>
+	<xs:element name="HIC" type="HIC"/>
+	<xs:complexType name="Height" mixed="true"/>
+	<xs:element name="Height" type="Height"/>
+	<xs:complexType name="Height_Units" mixed="true"/>
+	<xs:element name="Height_Units" type="Height_Units"/>
+	<xs:complexType name="Weight" mixed="true"/>
+	<xs:element name="Weight" type="Weight"/>
+	<xs:complexType name="Weight_Units" mixed="true"/>
+	<xs:element name="Weight_Units" type="Weight_Units"/>
+	<xs:complexType name="Written_Lang_Pref" mixed="true"/>
+	<xs:element name="Written_Lang_Pref" type="Written_Lang_Pref"/>
+	<xs:complexType name="Spoken_Lang_Pref" mixed="true"/>
+	<xs:element name="Spoken_Lang_Pref" type="Spoken_Lang_Pref"/>
+	<xs:complexType name="Interpreter_Req" mixed="true"/>
+	<xs:element name="Interpreter_Req" type="Interpreter_Req"/>
+	<xs:complexType name="KP_Client_ID_Number" mixed="true"/>
+	<xs:element name="KP_Client_ID_Number" type="KP_Client_ID_Number"/>
+	<xs:complexType name="Language_Line_Number" mixed="true"/>
+	<xs:element name="Language_Line_Number" type="Language_Line_Number"/>
+	<xs:complexType name="ASL_Number" mixed="true"/>
+	<xs:element name="ASL_Number" type="ASL_Number"/>
+	<!--KP Name-->
+	<xs:complexType name="Name">
+		<xs:sequence>
+			<xs:element ref="First" minOccurs="0"/>
+			<xs:element ref="Middle" minOccurs="0"/>
+			<xs:element ref="Last" minOccurs="0"/>
+			<xs:element name="Suffix" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Name" type="Name"/>
+	<xs:complexType name="First" mixed="true"/>
+	<xs:element name="First" type="First"/>
+	<xs:complexType name="Middle" mixed="true"/>
+	<xs:element name="Middle" type="Middle"/>
+	<xs:complexType name="Last" mixed="true"/>
+	<xs:element name="Last" type="Last"/>
+	<xs:complexType name="Suffix" mixed="true"/>
+	<xs:element name="Suffix" type="Suffix"/>
+	<!--End of KP Name sectionl-->
+	<!--KP Address-->
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element ref="Address_Business_Name" minOccurs="0"/>
+			<xs:element ref="Address_Line_1" minOccurs="0"/>
+			<xs:element ref="Address_Line_2" minOccurs="0"/>
+			<xs:element ref="City" minOccurs="0"/>
+			<xs:element ref="State" minOccurs="0"/>
+			<xs:element ref="Zip" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Address" type="Address"/>
+	<!--End of KP Address-->
+	<xs:complexType name="Address_Business_Name" mixed="true"/>
+	<xs:element name="Address_Business_Name" type="Address_Business_Name"/>
+	<xs:complexType name="Address_Line_1" mixed="true"/>
+	<xs:element name="Address_Line_1" type="Address_Line_1"/>
+	<xs:complexType name="Address_Line_2" mixed="true"/>
+	<xs:element name="Address_Line_2" type="Address_Line_2"/>
+	<xs:complexType name="City" mixed="true"/>
+	<xs:element name="City" type="City"/>
+	<xs:complexType name="State" mixed="true"/>
+	<xs:element name="State" type="State"/>
+	<xs:complexType name="Zip" mixed="true"/>
+	<xs:element name="Zip" type="Zip"/>
+</xs:schema>

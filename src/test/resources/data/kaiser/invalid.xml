@@ -8,7 +8,7 @@
         <Notification_Sent_Date>Apria</Notification_Sent_Date>
         <Notification_Sent_Time>Apria</Notification_Sent_Time>
         <Order_Location>Apria</Order_Location>
-        <Transaction_Type>Apria</Transaction_Type>
+        <!-- Commented this line  <Transaction_Type>Apria</Transaction_Type> -->
      </Order>
   </Order_Header>
   <Order_Equipment>

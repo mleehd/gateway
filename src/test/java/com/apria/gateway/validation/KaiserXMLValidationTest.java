@@ -55,7 +55,7 @@ public class KaiserXMLValidationTest {
 		exception.expect(SAXParseException.class);
 		
 		XMLValidator validator = xmlValidators.get(GatewayVendorEnum.KAISER);
-		Path inputPath = Paths.get(getClass().getClassLoader().getResource("data/kaiser/invalid_datatype.xml").toURI());
+		Path inputPath = Paths.get(getClass().getClassLoader().getResource("data/kaiser/invalid.xml").toURI());
 		String input = new String(Files.readAllBytes(inputPath));
 		validator.validate(input);
 			

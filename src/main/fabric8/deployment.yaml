@@ -1,0 +1,18 @@
+spec:
+  template:
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+        - name: SECRET_ACTIVEMQ_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: validationservice-secret
+            key: activemq.password
+        volumeMounts:
+        - name: validationservice-configmap-volume
+          mountPath: /data/validation
+      volumes:
+      - name: validationservice-configmap-volume
+        configMap:
+          name: validationservice-configmap

@@ -19,8 +19,4 @@ public class IncomingRouterBean {
 		XMLValidator validator = xmlValidators.get(GatewayVendorEnum.KAISER);
 		validator.validate(body);
 	}
-
-	public void handleException(@Body String body) {
-		//TODO: Send email
-	}
 }

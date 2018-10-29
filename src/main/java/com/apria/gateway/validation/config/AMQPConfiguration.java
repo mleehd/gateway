@@ -19,9 +19,9 @@ public class AMQPConfiguration {
 
 	@Bean
 	CamelContextConfiguration contextConfiguration(
-			@Value("${spring.activemq.user}") final String user,
-			@Value("${spring.activemq.password}") final String password,
-			@Value("${spring.activemq.broker-url}") final String url) {
+			@Value("${edi.activemq.user}") final String user,
+			@Value("${edi.activemq.password}") final String password,
+			@Value("${edi.activemq.broker-url}") final String url) {
 		
 		return new CamelContextConfiguration() {
 

@@ -17,6 +17,7 @@ public class KaiserIncomingAmqpRoute extends RouteBuilder {
 		
 		onException(Exception.class)
 			.handled(true)
+			//TODO: Multicast the error XML to errorQueue and send email
 			.setHeader("subject", constant("Invalid XML from Kaiser"))
 			.to("smtps://{{smtp.host}}:{{smtp.port}}"
 					+ "?username={{emailNotification.noReply.fromEmail}}&password={{emailNotification.password}}"
@@ -25,9 +26,11 @@ public class KaiserIncomingAmqpRoute extends RouteBuilder {
 		
 		from("activemq:neworder.queue")
 			.id("readXMLFromNewOrderQueueRoute")
+			//TODO: Save it in JDG/Infinispan
 			.bean(routerBean, "validateXML")
 			.log("*****Validated the XML***********")
 			;
+		  //TODO: Call the service that does transformation
 	}
 
 }

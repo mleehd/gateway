@@ -21,13 +21,13 @@ import com.apria.gateway.validation.app.XMLValidator;
 
 @Configuration
 public class XMLValidationConfiguration {
-	
+
 	@Value("${kaiser_inbound_xmlschema_path}")
 	private String schemaPath;
 
 	@Autowired
 	KaiserXMLValidatorImpl xmlValidator;
-	
+
 	@Bean
 	public Schema schemaBean() throws SAXException {
 		final SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -36,16 +36,19 @@ public class XMLValidationConfiguration {
 
 		return schema;
 	}
-	
-	@Bean(name="xmlValidators")
+
+	@Bean(name = "xmlValidators")
 	public Map<GatewayVendorEnum, XMLValidator> XMLValidatorBean() {
-		Map<GatewayVendorEnum, XMLValidator> map = new HashMap<GatewayVendorEnum, XMLValidator>() { 
-				{
-					put(GatewayVendorEnum.KAISER, xmlValidator);
-				}
+		Map<GatewayVendorEnum, XMLValidator> map = new HashMap<GatewayVendorEnum, XMLValidator>() {
+			{
+				put(GatewayVendorEnum.KAISER, xmlValidator);
+			}
 		};
-		
+
 		return map;
 	}
-	
+
+	public void setSchemaPath(String schemaPath) {
+		this.schemaPath = schemaPath;
+	}
 }

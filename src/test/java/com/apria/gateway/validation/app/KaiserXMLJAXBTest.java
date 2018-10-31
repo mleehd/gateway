@@ -1,4 +1,4 @@
-package com.apria.gateway.validation;
+package com.apria.gateway.validation.app;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,13 +17,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.apria.gateway.jaxb.KPOrder;
 
-
 @RunWith(SpringRunner.class)
 public class KaiserXMLJAXBTest {
-	
+
 	@Rule
-  public final ExpectedException exception = ExpectedException.none();
-	
+	public final ExpectedException exception = ExpectedException.none();
+
 	@Test
 	public void unmarshalTest() throws Exception {
 		try {
@@ -37,7 +36,7 @@ public class KaiserXMLJAXBTest {
 			throw e;
 		}
 	}
-	
+
 	@Test
 	public void invalidDataTypeTest() throws Exception {
 	}

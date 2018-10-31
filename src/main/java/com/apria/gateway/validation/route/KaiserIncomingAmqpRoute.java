@@ -24,7 +24,7 @@ public class KaiserIncomingAmqpRoute extends RouteBuilder {
 					+ "&to={{emailNotification.error.toEmail}}")
 			;
 		
-		from("activemq:neworder.queue")
+		from("activemq:EDIOrder")
 			.id("readXMLFromNewOrderQueueRoute")
 			//TODO: Save it in JDG/Infinispan
 			.bean(routerBean, "validateXML")

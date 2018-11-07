@@ -148,21 +148,37 @@
 				<version>2.2</version>
 				<executions>
 				    <execution>
-				        <id>xjc</id>
-				        <goals>
-				            <goal>xjc</goal>
-				        </goals>
+						<id>xjc</id>
+						<goals>
+						    <goal>xjc</goal>
+						</goals>
+						<configuration>
+							    <!-- The package of your generated sources -->
+						    <packageName>com.apria.gateway.jaxb</packageName>
+							<sources>
+						         <source>src/main/resources/xsd/kaiser_incoming.xsd</source>
+						     </sources>
+						     <outputDirectory>src/main/java</outputDirectory>
+						     <clearOutputDir>false</clearOutputDir>
+						</configuration>	
+				    </execution>
+				    <execution>
+						<id>xjc1</id>
+						<goals>
+						    <goal>xjc</goal>
+						</goals>
+						<configuration>
+							    <!-- The package of your generated sources -->
+						    <packageName>com.apria.gateway.err.jaxb</packageName>
+							<sources>
+						         <source>src/main/resources/xsd/error_outgoing.xsd</source>
+						     </sources>
+						     <outputDirectory>src/main/java</outputDirectory>
+						     <clearOutputDir>false</clearOutputDir>
+						</configuration>	
 				    </execution>
 				</executions>
-				<configuration>
-				    <!-- The package of your generated sources -->
-				    <packageName>com.apria.gateway.jaxb</packageName>
-					<sources>
-				         <source>src/main/resources/xsd/kaiser_incoming.xsd</source>
-				     </sources>
-				     <outputDirectory>src/main/java</outputDirectory>
-				     <clearOutputDir>false</clearOutputDir>
-				</configuration>
+
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

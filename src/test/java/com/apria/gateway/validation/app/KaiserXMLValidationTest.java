@@ -1,5 +1,7 @@
 package com.apria.gateway.validation.app;
 
+import static org.junit.Assert.assertEquals;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -62,22 +64,20 @@ public class KaiserXMLValidationTest {
 
 	@Test
 	public void invalidDataTypeTest() throws Exception {
-		exception.expect(SAXParseException.class);
-
+		//exception.expect(SAXParseException.class);
 		Path inputPath = Paths.get(getClass().getClassLoader().getResource("data/kaiser/invalid.xml").toURI());
 		String input = new String(Files.readAllBytes(inputPath));
-		xmlValidator.validate(input);
-
+		ValidatorResponseDto dto = xmlValidator.validate(input);
+		assertEquals("SCHEMA_VIOLATION", dto.getErrorType());
 	}
 	
 	@Test
 	public void duplicateOrderIdTest() throws Exception {
-		exception.expect(DuplicateOrderIdException.class);
-
+		//exception.expect(DuplicateOrderIdException.class);
 		Path inputPath = Paths.get(getClass().getClassLoader().getResource("data/kaiser/duplicate_orderid.xml").toURI());
 		String input = new String(Files.readAllBytes(inputPath));
-		xmlValidator.validate(input);
-
+		ValidatorResponseDto dto = xmlValidator.validate(input);
+		assertEquals("DUPLICATE_ORDER", dto.getErrorType());
 	}
 
 }

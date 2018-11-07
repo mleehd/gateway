@@ -18,12 +18,24 @@ public class EDIOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="edi_order_number")
+    @Column(name="order_id")
     private String ediOrderId;
 
-    @Column(name="edi_order_data")
+    @Column(name="order_xml")
     @Lob
     private String ediOrderData;
+    
+	@Column(name="type")
+    private String orderType;
+    
+    @Column(name="status")
+    private String status;
+    
+    @Column(name="error_type")
+    private String errorType;
+
+    @Column(name="error_message")
+    private String errorMsg;
 
     @Column(name="created_date", columnDefinition="DATETIME")
     private LocalDateTime createdDate;
@@ -53,6 +65,38 @@ public class EDIOrder {
 
 	public void setEdiOrderData(String ediOrderData) {
 		this.ediOrderData = ediOrderData;
+	}
+	
+    public String getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
 	}
 
 	public LocalDateTime getCreatedDate() {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:err="http://edigateway.apria.com/error"
+			targetNamespace="http://edigateway.apria.com/error"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:simpleType name="ErrorType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SCHEMA_VIOLATION" />
+            <xs:enumeration value="DUPLICATE_ORDER" />
+            <xs:enumeration value="BRANCH_UNDETERMINED" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ErrorDetailType">
+        <xs:sequence>
+            <xs:element name="Type" type="err:ErrorType" />
+            <xs:element name="Message"  type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IncomingEDIMessageErrorType">
+        <xs:sequence>
+            <xs:element name="OriginalMessage" type="xs:string" />
+            <xs:element name="ErrorDetail" type="err:ErrorDetailType" />
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:element name="IncomingEDIMessageError" type="err:IncomingEDIMessageErrorType" /> 
+</xs:schema>

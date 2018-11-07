@@ -13,6 +13,7 @@ import javax.xml.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.xml.sax.SAXException;
 
 import com.apria.gateway.validation.app.exception.DuplicateOrderIdException;
 import com.apria.gateway.validation.model.EDIOrder;
@@ -27,18 +28,30 @@ public class KaiserXMLValidatorImpl implements XMLValidator {
 	private EDIOrderService ediOrderService;
 	
 	@Override
-	public void validate(String xml) throws Exception {
+	public ValidatorResponseDto validate(String xml) throws Exception {
 		Source source = new StreamSource(new StringReader(xml));
-
-		Validator validator = schema.newValidator();
-		validator.validate(source);
+		ValidatorResponseDto dto = new ValidatorResponseDto();
 		
 		String orderId = getKaiserOrderId(xml);
+		dto.setOrderId(orderId);
+		
+		Validator validator = schema.newValidator();
+		try {
+			validator.validate(source);
+		} catch (SAXException e) {
+			dto.setErrorType("SCHEMA_VIOLATION");
+			dto.setE(e);
+			return dto;
+		}
+
         EDIOrder edi = ediOrderService.findByEDIOrderId(orderId);
         if (edi != null) {
         	System.out.println("KaiserXMLValidatorImpl.validate. OrderId->" + edi.getEdiOrderId());
-        	throw new DuplicateOrderIdException(orderId);
+        	dto.setErrorType("DUPLICATE_ORDER");
+        	dto.setE(new DuplicateOrderIdException(orderId));
         }
+        
+        return dto;
 	}
 	
 	private String getKaiserOrderId(String xml) throws Exception {

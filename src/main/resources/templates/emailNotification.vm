@@ -1,8 +1,8 @@
-Incident has been reported. Invalid XML received.
+Incoming XML has errors. Error details
 
-XML received is
+Order# --> ${headers.orderId}
+Error Type --> ${headers.errorType}
+Error/Exception --> ${headers.exception_message}
 
 
-$body
-
-This is an auto generated email. You cannot reply.
+This is an auto generated email. Please do not reply.

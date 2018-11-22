@@ -23,11 +23,11 @@ public class IncomingRouterBean {
 	Map<String, XMLValidator> xmlValidators;
 
 	public void validateXML(Exchange ex) throws Exception {
-		// Validator
+
 		XMLValidator validator = xmlValidators.get(GatewayVendorEnum.KAISER);
 		ValidatorResponseDto dto = validator.validate(ex.getIn().getBody().toString());
 		
-		if (null != dto.getErrorType()) {
+		if (dto != null) {
 			ex.getIn().setHeader("orderId", dto.getOrderId());
 			ex.getIn().setHeader("errorType", dto.getErrorType());
 			throw dto.getE();

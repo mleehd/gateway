@@ -27,33 +27,35 @@ public class KaiserXMLValidatorImpl implements XMLValidator {
 	@Autowired
 	private EDIOrderService ediOrderService;
 	
-	@Override
 	public ValidatorResponseDto validate(String xml) throws Exception {
 		Source source = new StreamSource(new StringReader(xml));
-		ValidatorResponseDto dto = new ValidatorResponseDto();
-		
-		String orderId = getKaiserOrderId(xml);
-		dto.setOrderId(orderId);
-		
+		ValidatorResponseDto dto = null;
 		Validator validator = schema.newValidator();
+		String orderId = null;
+		System.out.println("*******XML is -->" + xml);
 		try {
 			validator.validate(source);
 		} catch (SAXException e) {
-			dto.setErrorType("SCHEMA_VIOLATION");
-			dto.setE(e);
-			return dto;
+			orderId = getKaiserOrderId(xml);
+			return getResponseDto(orderId, "SCHEMA_VIOLATION", e);
 		}
-
+		
+		orderId = getKaiserOrderId(xml);
         EDIOrder edi = ediOrderService.findByEDIOrderId(orderId);
         if (edi != null) {
-        	System.out.println("KaiserXMLValidatorImpl.validate. OrderId->" + edi.getEdiOrderId());
-        	dto.setErrorType("DUPLICATE_ORDER");
-        	dto.setE(new DuplicateOrderIdException(orderId));
+        	System.out.println("KaiserXMLValidatorImpl.DuplicatedOrderFound. OrderId->" + edi.getEdiOrderId());
+        	return getResponseDto(orderId, "DUPLICATE_ORDER", new DuplicateOrderIdException(orderId));
         }
-        
         return dto;
 	}
 	
+	private ValidatorResponseDto getResponseDto(String orderId, String errorType, Exception e) throws Exception {
+		ValidatorResponseDto dto = new ValidatorResponseDto();
+		dto.setOrderId(orderId);
+		dto.setErrorType(errorType);
+		dto.setE(e);
+		return dto;
+	}
 	private String getKaiserOrderId(String xml) throws Exception {
 		//XMLInputFactory is not thread safe. Hence instantiating the object 
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();

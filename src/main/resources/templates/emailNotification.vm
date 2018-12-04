@@ -1,8 +1,8 @@
 Incoming XML has errors. Error details
 
-Order# --> ${headers.orderId}
-Error Type --> ${headers.errorType}
-Error/Exception --> ${headers.exception_message}
+Order# --> ${headers.validateResponse.orderId}
+Error Type --> ${headers.validateResponse.errorType}
+Error/Exception --> ${headers.validateResponse.exceptionMessage}
 
 
 This is an auto generated email. Please do not reply.

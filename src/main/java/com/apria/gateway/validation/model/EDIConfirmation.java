@@ -1,22 +1,21 @@
 package com.apria.gateway.validation.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="edi_order")
-public class EDIOrder {
+@Table(name="edi_confirmation")
+public class EDIConfirmation {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,32 +24,33 @@ public class EDIOrder {
     @Column(name="order_id")
     private String ediOrderId;
 
-    @Column(name="order_xml")
+	@Column(name="line_item_referral_id")
+    private String referralId;
+    
+    @Column(name="line_item_order_data")
     @Lob
-    private String ediOrderData;
+    private String lineItemOrderData;
+    
+    @Column(name="line_item_confirmation_data")
+    @Lob
+    private String lineItemConfirmationData;
     
 	@Column(name="type")
-    private String orderType;
+    private String type;
     
     @Column(name="status")
     private String status;
-    
-    @Column(name="error_type")
-    private String errorType;
-
-    @Column(name="error_message")
-    private String errorMsg;
-
-	@OneToMany(mappedBy = "ediorder",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<EDIConfirmation> confirmations;
     
     @Column(name="created_date", columnDefinition="DATETIME")
     private LocalDateTime createdDate;
 
     @Column(name="modified_date", columnDefinition="DATETIME")
     private LocalDateTime modifiedDate;
-
-
+    
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "order_id", nullable=false, updatable = false, insertable = false)
+	private EDIOrder ediorder;
+	
     public Long getId() {
 		return id;
 	}
@@ -66,23 +66,39 @@ public class EDIOrder {
 	public void setEdiOrderId(String ediOrderNumber) {
 		this.ediOrderId = ediOrderNumber;
 	}
-
-	public String getEdiOrderData() {
-		return ediOrderData;
+	
+    public String getReferralId() {
+		return referralId;
 	}
 
-	public void setEdiOrderData(String ediOrderData) {
-		this.ediOrderData = ediOrderData;
+	public void setReferralId(String referralId) {
+		this.referralId = referralId;
+	}
+
+	public String getLineItemOrderData() {
+		return lineItemOrderData;
+	}
+
+	public void setLineItemOrderData(String lineItemOrderData) {
+		this.lineItemOrderData = lineItemOrderData;
+	}
+
+	public String getLineItemConfirmationData() {
+		return lineItemConfirmationData;
+	}
+
+	public void setLineItemConfirmationData(String lineItemConfirmationData) {
+		this.lineItemConfirmationData = lineItemConfirmationData;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
-    public String getOrderType() {
-		return orderType;
-	}
-
-	public void setOrderType(String orderType) {
-		this.orderType = orderType;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -91,30 +107,6 @@ public class EDIOrder {
 		this.status = status;
 	}
 
-	public String getErrorType() {
-		return errorType;
-	}
-
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
-
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
-    
-    public List<EDIConfirmation> getConfirmations() {
-		return confirmations;
-	}
-
-	public void setConfirmations(List<EDIConfirmation> confirmations) {
-		this.confirmations = confirmations;
-	}
-	
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}

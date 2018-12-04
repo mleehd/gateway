@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -31,33 +32,45 @@ public class KaiserXMLValidatorImpl implements XMLValidator {
 		Source source = new StreamSource(new StringReader(xml));
 		ValidatorResponseDto dto = null;
 		Validator validator = schema.newValidator();
+		
 		String orderId = null;
-		System.out.println("*******XML is -->" + xml);
+		try {
+			orderId = getKaiserOrderId(xml);
+		} catch (XMLStreamException e) {
+			return getResponseDto(orderId, "SCHEMA_VIOLATION", e, "1000");
+		}
+
+		//check if XML conforms to schema
 		try {
 			validator.validate(source);
 		} catch (SAXException e) {
-			orderId = getKaiserOrderId(xml);
-			return getResponseDto(orderId, "SCHEMA_VIOLATION", e);
+			return getResponseDto(orderId, "SCHEMA_VIOLATION", e, "1000");
 		}
-		
-		orderId = getKaiserOrderId(xml);
+
+		//Duplicate order check
         EDIOrder edi = ediOrderService.findByEDIOrderId(orderId);
         if (edi != null) {
         	System.out.println("KaiserXMLValidatorImpl.DuplicatedOrderFound. OrderId->" + edi.getEdiOrderId());
-        	return getResponseDto(orderId, "DUPLICATE_ORDER", new DuplicateOrderIdException(orderId));
+        	return getResponseDto(orderId, "DUPLICATE_ORDER", new DuplicateOrderIdException(orderId), "1001");
         }
+        
+        dto = new ValidatorResponseDto();
+		dto.setOrderId(orderId);
         return dto;
 	}
 	
-	private ValidatorResponseDto getResponseDto(String orderId, String errorType, Exception e) throws Exception {
+	private ValidatorResponseDto getResponseDto(String orderId, String errorType, Exception e, String errorCode) throws Exception {
 		ValidatorResponseDto dto = new ValidatorResponseDto();
 		dto.setOrderId(orderId);
 		dto.setErrorType(errorType);
 		dto.setE(e);
+		dto.setErrorCode(errorCode);
 		return dto;
 	}
-	private String getKaiserOrderId(String xml) throws Exception {
-		//XMLInputFactory is not thread safe. Hence instantiating the object 
+	
+	private String getKaiserOrderId(String xml) throws XMLStreamException {
+
+		// XMLInputFactory is not thread safe. Hence instantiating the object
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		InputStream in = new ByteArrayInputStream(xml.getBytes());
 		XMLStreamReader streamReader = inputFactory.createXMLStreamReader(in);

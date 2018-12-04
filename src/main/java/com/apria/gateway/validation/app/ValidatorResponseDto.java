@@ -7,6 +7,10 @@ public class ValidatorResponseDto {
 	
 	private Exception e;
 	
+	private String exceptionMessage;
+	
+	private String errorCode;
+	
 	public String getOrderId() {
 		return orderId;
 	}
@@ -26,9 +30,21 @@ public class ValidatorResponseDto {
 	public Exception getE() {
 		return e;
 	}
-
+	
+	public String getExceptionMessage() {
+		return exceptionMessage;
+	}
+	
 	public void setE(Exception e) {
 		this.e = e;
+		this.exceptionMessage = e.getMessage();
+	}
+	
+	public String getErrorCode() {
+		return errorCode;
 	}
 
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
 }

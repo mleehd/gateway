@@ -78,6 +78,11 @@
 	      <artifactId>camel-velocity</artifactId>
 	      <version>${camel.version}</version>
 	    </dependency>
+	    <dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jaxb</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
 	    <!--  SMTP Mail -->
 		<dependency>
 	       <groupId>org.apache.camel</groupId>
@@ -171,7 +176,7 @@
 							    <!-- The package of your generated sources -->
 						    <packageName>com.apria.gateway.err.jaxb</packageName>
 							<sources>
-						         <source>src/main/resources/xsd/error_outgoing.xsd</source>
+						         <source>src/main/resources/xsd/kaiser_error_outgoing.xsd</source>
 						     </sources>
 						     <outputDirectory>src/main/java</outputDirectory>
 						     <clearOutputDir>false</clearOutputDir>

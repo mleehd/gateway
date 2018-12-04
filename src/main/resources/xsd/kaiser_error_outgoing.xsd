@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2019 (http://www.altova.com) by Srini (Abc) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			xmlns:err="http://edi.integration.apria.com/error"
+			targetNamespace="http://edi.integration.apria.com/error"
+			xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
+			elementFormDefault="qualified" 
+			attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:complexType name="errorMessage">
+		<xs:sequence>
+			<!--Integration partner-->
+			<xs:element name="vendor" type="xs:string"/>
+			<!--Machine readable error code: 1000 XSD validation error; 1001 ... -->
+			<xs:element name="code" type="xs:string"/>
+			<!--Short description of error-->
+			<xs:element name="description" type="xs:string"/>
+			<!--Timestamp message received; preferably in https://www.iso.org/iso-8601-date-and-time-format.html format-->
+			<xs:element name="timestamp" type="xs:string"/>
+			<!--Reference to system & component that experienced the error-->
+			<xs:element name="source" type="xs:string"/>
+			<xs:element name="details" type="xs:string"/>
+			<!--Original Message sent by Kaiser-->
+			<xs:element name="originalMessage" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="errorMessage" type="err:errorMessage">
+		<xs:annotation>
+			<xs:documentation>Begin of ErrorMessage section</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

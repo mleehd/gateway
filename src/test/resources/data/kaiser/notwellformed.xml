@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<KP_Order xsi:noNamespaceSchemaLocation="schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Order_Header
+     <Order>
+        <Vendor_ID>Apria</Vendor_ID>
+        <KP_Order_ID>Apria</KP_Order_ID>
+        <Vendor_Order_ID>Apria</Vendor_Order_ID>
+        <Notification_Sent_Date>Apria</Notification_Sent_Date>
+        <Notification_Sent_Time>Apria</Notification_Sent_Time>
+        <Order_Location>Apria</Order_Location>
+        <!-- Commented this line  <Transaction_Type>Apria</Transaction_Type> -->
+     </Order>
+  </Order_Header>
+  <Order_Equipment>
+    <Order_Equipment_Line>
+      <Order_Line />
+    </Order_Equipment_Line>
+    <Order_Equipment_Line>
+      <Order_Line />
+    </Order_Equipment_Line>
+    <Order_Equipment_Line>
+      <Order_Line />
+    </Order_Equipment_Line>
+  </Order_Equipment>
+  <Order_Equipment
+    <Order_Equipment_Line>
+      <Order_Line />
+    </Order_Equipment_Line>
+  </Order_Equipment>
+  <Order_Equipment>
+    <Order_Equipment_Line>
+      <Order_Line />
+    </Order_Equipment_Line>
+  </Order_Equipment>
+  <Delivery_Addresses>
+    <Delivery_Address />
+    <Delivery_Address />
+    <Delivery_Address />
+  </Delivery_Addresses>
+  <Delivery_Addresses>
+    <Delivery_Address />
+    <Delivery_Address />
+    <Delivery_Address />
+    <Delivery_Address />
+  </Delivery_Addresses>
+  <Delivery_Addresses>
+    <Delivery_Address />
+  </Delivery_Addresses>
+  <Order_Notes>
+    <Order_Note />
+    <Order_Note />
+    <Order_Note />
+  </Order_Notes>
+  <Order_Notes />
+  <Order_Notes>
+    <Order_Note />
+    <Order_Note />
+    <Order_Note />
+  </Order_Notes>
+  <Order_Notes>
+    <Order_Note />
+  </Order_Notes>
+</KP_Order>

@@ -44,10 +44,9 @@ public class KaiserXMLValidationTest {
     @Before
     public void setUp() {
         EDIOrder order = new EDIOrder();
-        order.setEdiOrderId("10001");
+        order.setEdiOrderId("GDUPLICATE290");
      
-        Mockito.when(ediOrderService.findByEDIOrderId("10001")).thenReturn(order);
-        Mockito.when(ediOrderService.findByEDIOrderId("10002")).thenReturn(null);
+        Mockito.when(ediOrderService.findByEDIOrderId("GDUPLICATE290")).thenReturn(order);
     }
 	
     @Test
@@ -63,7 +62,7 @@ public class KaiserXMLValidationTest {
 	}
 
 	@Test
-	public void invalidDataTypeTest() throws Exception {
+	public void schemaViolationTest() throws Exception {
 		//exception.expect(SAXParseException.class);
 		Path inputPath = Paths.get(getClass().getClassLoader().getResource("data/kaiser/invalid.xml").toURI());
 		String input = new String(Files.readAllBytes(inputPath));
@@ -78,6 +77,14 @@ public class KaiserXMLValidationTest {
 		String input = new String(Files.readAllBytes(inputPath));
 		ValidatorResponseDto dto = xmlValidator.validate(input);
 		assertEquals("DUPLICATE_ORDER", dto.getErrorType());
+	}
+	
+	//@Test
+	public void notWellformedXMLTest() throws Exception {
+		Path inputPath = Paths.get(getClass().getClassLoader().getResource("data/kaiser/notwellformed.xml").toURI());
+		String input = new String(Files.readAllBytes(inputPath));
+		ValidatorResponseDto dto = xmlValidator.validate(input);
+		assertEquals("NOTWELLFORMED_XML", dto.getErrorType());
 	}
 
 }

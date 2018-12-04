@@ -30,7 +30,7 @@ public class KaiserXMLJAXBTest {
 			Unmarshaller u = jc.createUnmarshaller();
 			InputStream is = new ClassPathResource("/data/kaiser/success.xml").getInputStream();
 			KPOrder order = ((JAXBElement<KPOrder>) u.unmarshal(is)).getValue();
-			assertEquals(order.getOrderHeader().getOrder().getVendorID().getContent(), "Apria");
+			assertEquals(order.getOrderHeader().getOrder().getVendorID(), "VENDOR123");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
